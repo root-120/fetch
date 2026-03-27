@@ -13,13 +13,15 @@ CPU = subprocess.check_output(
 ).split(':', 1)[1].strip()
 print(f"CPU: {CPU}")
 
+gpu_num = 0
 gpu_output = subprocess.check_output(
     "lspci | grep ' VGA ' | awk -F': ' '{print $2}' | sed 's/ (rev.*)//'",
     shell=True,
     text=True
 ).strip().split('\n')
 for i in range(len(gpu_output)):
-    print(f"GPU: {gpu_output[i]}")
+    gpu_num += 1
+    print(f"GPU{gpu_num}: {gpu_output[i]}")
 
 OS = subprocess.check_output(
     ['grep', '-m1', 'PRETTY_NAME', '/etc/os-release'],
